@@ -1,0 +1,33 @@
+FROM ubuntu:trusty
+
+RUN apt-get update && apt-get install -y \
+    python \
+    python-pip \
+    vim \
+    git \
+    screen \
+    tmux \
+    rxvt-unicode \
+    iptables \
+    net-tools \
+    unzip \
+    wget \
+    curl \
+    traceroute \
+    tshark \
+    build-essential \
+    autoconf \
+    libtool
+
+RUN git clone https://github.com/httperf/httperf.git
+RUN mkdir build; cd httperf; autoreconf -i
+RUN cd build; ../httperf/configure; make; make install
+RUN rm -r build httperf
+
+RUN curl https://my-netdata.io/kickstart-static64.sh >/tmp/kickstart-static64.sh && \
+    sh /tmp/kickstart-static64.sh --dont-wait --dont-start-it
+
+WORKDIR /root
+RUN dd if=/dev/zero of=test.dat  bs=1M  count=24
+
+CMD /bin/bash

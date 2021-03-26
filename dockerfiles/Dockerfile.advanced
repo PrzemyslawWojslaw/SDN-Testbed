@@ -1,0 +1,45 @@
+FROM ubuntu:trusty
+
+RUN apt-get update && apt-get install -y \
+    python \
+    python-pip \
+    vim \
+    git \
+    screen \
+    tmux \
+    rxvt-unicode \
+    iptables \
+    net-tools \
+    unzip \
+    wget \
+    curl \
+    traceroute \
+    tshark
+
+RUN apt-get update && apt-get install -y \
+    tcpreplay \
+    netcat \
+    nmap \
+    netdiscover \
+    hping3 \
+    iperf3
+
+RUN pip install scapy
+
+RUN curl https://my-netdata.io/kickstart-static64.sh >/tmp/kickstart-static64.sh && \
+    sh /tmp/kickstart-static64.sh --dont-wait --dont-start-it
+
+RUN git clone https://github.com/httperf/httperf.git
+RUN mkdir build; cd httperf; autoreconf -i
+RUN cd build; ../httperf/configure; make; make install
+RUN rm -r build httperf
+
+RUN wget http://www.grid.unina.it/software/ITG/codice/D-ITG-2.8.1-r1023-src.zip
+RUN unzip D-ITG-2.8.1-r1023-src.zip; rm D-ITG-2.8.1-r1023-src.zip
+RUN mv D-ITG-2.8.1-r1023 D-ITG
+RUN cd D-ITG/src; make;
+
+WORKDIR /root
+RUN dd if=/dev/zero of=test.dat  bs=1M  count=24
+
+CMD /bin/bash

@@ -1,0 +1,22 @@
+FROM ubuntu:trusty
+
+RUN apt-get update && apt-get install -y \
+    python \
+    python-pip \
+    vim \
+    git \
+    screen \
+    tmux \
+    rxvt-unicode \
+    iptables \
+    net-tools \
+    unzip \
+    wget \
+    curl \
+    traceroute \
+    tshark
+
+WORKDIR /root
+RUN dd if=/dev/zero of=test.dat  bs=1M  count=24
+
+CMD /bin/bash
