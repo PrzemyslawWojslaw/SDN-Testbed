@@ -12,7 +12,7 @@ Details (only in Polish) can be found in thesis file *"Przemysław Wojsław - Pr
 
 ## Instalation
 
-Requires **Ubuntu Linux 18.04 LTS**. May run on **Linux 20.04 LTS** as this is an experimental Containernet feature.
+Requires **Ubuntu Linux 18.04 LTS**.
 
 ```bash
 $ git clone https://github.com/PrzemyslawWojslaw/SDN-Testbed.git
@@ -32,3 +32,12 @@ starts topology wizard, where network parameters are defined. Finishing in this 
 The "Load" option requires from file to hava a structure similar to *"topo/topo_exapmle.py"*. it's the same as required by Mininet/Containernet when invoked from terminal (*"sudo mn --custom ./topo/topo_example.py --topo=mytopo"*).
 
 It is possible to create custom predefined scenarios. To do that, edit *"tools/predefinedTopos.py"* and add new class like example ones (remeber to append your class to *"topos"* dictionary at the end of the file).
+
+## Issues
+
+- Inaccurate synchronization caused by the multithreaded nature of the environment often causes the recipient to send back the packet with the RST flag.
+- Large packets present in the original file may not be sent by the host if the interface has an MTU value lower than the packet size (default 1500).
+- Very high communication rates may not be represented correctly. 
+- Embedded terminals in GUI do not display properly (xterm issue), though still are usable.
+
+**Work on the project has been suspended at this point, but may be resumed in the future.**
