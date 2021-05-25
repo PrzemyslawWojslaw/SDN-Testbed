@@ -53,7 +53,7 @@ class ManagerWindow(QtWidgets.QMainWindow):
 
         # mininet commands
         self.ui.actionPingAll.triggered.connect(lambda: self.network.pingAll())
-        self.ui.actionInfoDump.triggered.connect(self.__infoDump)
+        self.ui.actionInfoDump.triggered.connect(self.infoDump)
         self.ui.actionStartXterms.triggered.connect(lambda: self.startXterms())
         # host commands
         self.ui.actionCtrl_C.triggered.connect(lambda: self.cmdStandard("C-c"))
@@ -74,7 +74,7 @@ class ManagerWindow(QtWidgets.QMainWindow):
 
         row = 0
         column = 0
-        for node in self.network.hosts:
+        for node in net.hosts:
             terminal = EmbeddedTerminal(net, node)
             layoutScroll.addWidget(terminal, row, column)
             column += 1
